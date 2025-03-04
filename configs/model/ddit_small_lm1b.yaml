@@ -1,0 +1,9 @@
+_target_: model.ddit.DDit
+hidden_size   : 768
+n_heads       : 12
+cond_dim      : 128
+dropout       : 0.0
+n_blocks      : 14
+length        : 128
+input_dim     : ${tokens}
+output_dim    : ${tokens}

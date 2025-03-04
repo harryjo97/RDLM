@@ -1,0 +1,11 @@
+# @package _global_
+
+defaults:
+  - base
+  - override /hydra/launcher: joblib
+
+n_jobs: 2
+
+hydra:
+  launcher:
+    n_jobs: ${n_jobs}

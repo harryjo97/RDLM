@@ -1,0 +1,38 @@
+# @package _global_
+
+num_workers: 8
+
+paths:
+  experiments: exps
+
+hydra:
+  sweep:
+    dir: ./exps/${name}/${now:%m%d}/${hydra.job.override_dirname}
+    subdir: ${seed}
+  run:
+    dir: ./exps/${name}/${now:%m%d}/${hydra.job.override_dirname}/${seed}
+
+  job:
+    config:
+      # configuration for the ${hydra.job.override_dirname} runtime variable
+      override_dirname:
+        exclude_keys:
+          # - run_mode
+          - exp 
+          - server
+          - seed
+          - ngpus
+          - num_workers
+          - training.log_freq
+          - training.eval_freq
+          - training.snapshot_freq
+          - training.snapshot_freq_for_preemption
+          - training.snapshot_sampling
+          - training.accum
+          - training.n_iters
+          - use_wandb
+          - eval.gen_ppl
+          - eval.eval_model
+          - eval.entropy
+          - eval.batch_size
+          - data.cache_dir

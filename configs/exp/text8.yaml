@@ -1,0 +1,37 @@
+# @package _global_
+name: text8
+
+defaults:
+  - /model: ddit_small_text8
+
+original_tokens  : 27
+tokens           : 27
+
+training:
+  batch_size   : 512
+  accum        : 1
+  n_iters      : 1000001
+  snapshot_freq: 50000
+  log_freq     : 50
+  eval_freq    : 10000
+  snapshot_freq_for_preemption: 5000
+  snapshot_sampling: True
+  ema          : 0.9999
+  loss_type    : ce
+
+data:
+  train    : text8
+  valid    : text8
+  cache_dir: data
+
+sampling:
+  steps       : 256
+  predictor   : grw
+
+eval:
+  batch_size    : ${training.batch_size}
+  n_iters       : 200
+  entropy       : True
+  eval_model    : gptj
+  nll           : True
+  simul_steps   : 500

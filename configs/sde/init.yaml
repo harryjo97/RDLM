@@ -1,0 +1,7 @@
+_target_: sde.LogBridge_Init
+preprocess_steps: 10000
+
+prior_dist:
+  _target_: distribution.Initial
+  add_mask_token: True
+  rlambda : 0.0 # 0.0->masked, 1.0->uniform

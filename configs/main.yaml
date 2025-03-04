@@ -1,0 +1,17 @@
+defaults:
+  # GENERAL #
+  - _self_
+  - server    : train
+  - exp       : text8
+  - sde       : mixture
+  - scheduler : geometric
+  - optim     : adamw
+
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+
+seed    : 0
+ngpus   : 0
+use_wandb: True
+run_mode : train
+num_workers: 4

@@ -1,0 +1,38 @@
+# @package _global_
+name: lm1b
+
+defaults:
+  - /model: ddit_small_lm1b
+
+original_tokens  : 30522
+tokens           : 3
+
+training:
+  batch_size   : 512
+  accum        : 1
+  n_iters      : 1000001
+  snapshot_freq: 50000
+  log_freq     : 50
+  eval_freq    : 10000
+  snapshot_freq_for_preemption: 5000
+  snapshot_sampling: True
+  ema          : 0.9999
+  loss_type    : ce
+
+data:
+  train    : lm1b
+  valid    : lm1b
+  cache_dir: data
+
+sampling:
+  steps       : 1000
+  predictor   : grw
+
+eval:
+  batch_size    : ${training.batch_size}
+  n_iters       : 200
+  entropy       : True
+  gen_ppl       : True
+  eval_model    : gpt2
+  nll           : True
+  simul_steps   : 500

@@ -1,0 +1,9 @@
+_target_: sde.LogBridge_Mixture
+preprocess_steps: 10000
+mix_type        : step
+rho_scale       : 1.0
+step_thr        : 0.0
+
+prior_dist:
+  _target_: distribution.Mixture
+  add_mask_token: True

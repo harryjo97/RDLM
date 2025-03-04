@@ -1,0 +1,18 @@
+# @package _global_
+
+name: sample
+model_path:
+
+sampling:
+  batch_per_gpu: 0
+  predictor    : grw
+  steps        : 1000
+
+eval:
+  batch_size    : 0
+  n_iters       : 200
+  entropy       : True
+  nll           : True
+  gen_ppl       : True
+  eval_model    : gpt2
+  simul_steps   : 500

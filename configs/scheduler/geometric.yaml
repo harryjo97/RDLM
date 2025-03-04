@@ -1,0 +1,9 @@
+_target_: scheduler_lib.Geometric
+beta_0  : 1e-3
+beta_f  : 2e-1
+weight_type: step
+
+left : 0.3
+right: 0.75
+lb   : 1e-4
+ub   : 1.

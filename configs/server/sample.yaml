@@ -1,0 +1,37 @@
+# @package _global_
+
+defaults:
+  - override /hydra/launcher: joblib
+
+num_workers: 8
+
+paths:
+  experiments: exps
+
+hydra:
+  sweep:
+    dir: ./exps/${name}/${path2data:${model_path}}/${path2name:${model_path}}/${hydra.job.override_dirname}
+    subdir: ${seed}
+  run:
+    dir: ./exps/${name}/${path2data:${model_path}}/${path2name:${model_path}}/${hydra.job.override_dirname}/${seed}
+
+  job:
+    config:
+      # configuration for the ${hydra.job.override_dirname} runtime variable
+      override_dirname:
+        exclude_keys:
+          - exp
+          - server
+          - seed
+          - ngpus
+          - use_wandb
+          - eval.ppl
+          - eval.gen_ppl
+          - eval.eval_model
+          - eval.entropy
+          - run_mode
+          - data.cache_dir
+          - model_path
+          - sampling.batch_per_gpu
+          - prefix
+          - suffix
