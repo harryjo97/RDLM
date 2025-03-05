@@ -2,7 +2,7 @@
 name: lm1b
 
 defaults:
-  - /model: ddit_small_lm1b
+  - /model: dit_small_lm1b
 
 original_tokens  : 30522
 tokens           : 3

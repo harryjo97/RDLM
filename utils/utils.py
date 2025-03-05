@@ -11,12 +11,6 @@ import fsspec
 import pdb
 
 
-def load_hydra_config_from_run(load_dir):
-    cfg_path = os.path.join(load_dir, ".hydra/config.yaml")
-    cfg = OmegaConf.load(cfg_path)
-    return cfg
-
-
 def makedirs(dirname):
     os.makedirs(dirname, exist_ok=True)
 
@@ -66,6 +60,7 @@ def restore_checkpoint(ckpt_dir, state, device):
         state['model'].module.load_state_dict(loaded_state['model'], strict=False)
         state['ema'].load_state_dict(loaded_state['ema'])
         state['step'] = loaded_state['step']
+        state['config'] = loaded_state['config']
         return state
 
 
@@ -74,7 +69,8 @@ def save_checkpoint(ckpt_dir, state):
         'optimizer': state['optimizer'].state_dict(),
         'model': state['model'].module.state_dict(),
         'ema': state['ema'].state_dict(),
-        'step': state['step']
+        'step': state['step'],
+        'config': state['config']
     }
     torch.save(saved_state, ckpt_dir)
 

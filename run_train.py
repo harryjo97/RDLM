@@ -147,7 +147,7 @@ def _run(rank, world_size, cfg):
         fig.savefig(os.path.join(cfg.work_dir, 'moments.png'), dpi=300, bbox_inches="tight")
 
     # build model
-    drift_model = instantiate(cfg.model, vocab_size=vocab_size, sde=sde).to(device)
+    drift_model = instantiate(cfg.model).to(device)
     drift_model = torch.compile(drift_model)
     drift_model = DDP(drift_model, device_ids=[rank], static_graph=True, find_unused_parameters=True)
 
@@ -161,7 +161,9 @@ def _run(rank, world_size, cfg):
     # build optimization state
     optimizer = losses.get_optimizer(cfg, drift_model.parameters())
     scaler = torch.cuda.amp.GradScaler()
-    state = dict(optimizer=optimizer, scaler=scaler, model=drift_model, sde=sde, ema=ema, step=0) 
+    state = dict(
+        optimizer=optimizer, scaler=scaler, model=drift_model, sde=sde, ema=ema, step=0, config=cfg
+    ) 
 
     # load in state
     state = utils.restore_checkpoint(checkpoint_meta_dir, state, device)

@@ -2,7 +2,7 @@
 name: text8
 
 defaults:
-  - /model: ddit_small_text8
+  - /model: dit_small_text8
 
 original_tokens  : 27
 tokens           : 27

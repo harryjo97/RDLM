@@ -109,7 +109,7 @@ class LabelEmbedder(nn.Module):
 #################################################################################
 
 
-class DDiTBlock(nn.Module):
+class DiTBlock(nn.Module):
 
     def __init__(self, dim, n_heads, cond_dim, mlp_ratio=4, dropout=0.1):
         super().__init__()
@@ -213,7 +213,7 @@ class TopkEmbeddingLayer(nn.Module):
         return torch.einsum("...i,...ij->...j", topk_val, self.embedding[topk_idx])
 
 
-class DDitFinalLayer(nn.Module):
+class DiTFinalLayer(nn.Module):
     def __init__(self, hidden_size, out_channels, cond_dim):
         super().__init__()
         self.norm_final = LayerNorm(hidden_size)
@@ -233,7 +233,7 @@ class DDitFinalLayer(nn.Module):
         return x
 
 
-class DDit(nn.Module, PyTorchModelHubMixin):
+class DiT(nn.Module, PyTorchModelHubMixin):
     def __init__(
             self,
             input_dim: int,
@@ -255,11 +255,11 @@ class DDit(nn.Module, PyTorchModelHubMixin):
         self.rotary_emb = rotary.Rotary(hidden_size // n_heads)
 
         self.blocks = nn.ModuleList([
-            DDiTBlock(hidden_size, n_heads, cond_dim, dropout=dropout) 
+            DiTBlock(hidden_size, n_heads, cond_dim, dropout=dropout) 
             for _ in range(n_blocks)
         ])
 
-        self.output_layer = DDitFinalLayer(hidden_size, output_dim, cond_dim)
+        self.output_layer = DiTFinalLayer(hidden_size, output_dim, cond_dim)
         self.kwargs = kwargs
 
     def _get_bias_dropout_scale(self):

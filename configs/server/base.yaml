@@ -17,7 +17,7 @@ hydra:
       # configuration for the ${hydra.job.override_dirname} runtime variable
       override_dirname:
         exclude_keys:
-          # - run_mode
+          - run_mode
           - exp 
           - server
           - seed

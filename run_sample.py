@@ -57,9 +57,6 @@ def run_multiprocess(rank, world_size, cfg, port):
 def _run(rank, world_size, cfg):
     torch.cuda.set_device(rank)
     work_dir = cfg.work_dir
-    train_cfg = OmegaConf.load(os.path.join(
-        os.path.dirname(os.path.dirname(cfg.model_path)), ".hydra/config.yaml"
-    ))
 
     # Create directories for experimental logs
     sample_dir = os.path.join(work_dir, "samples")
@@ -92,6 +89,11 @@ def _run(rank, world_size, cfg):
 
     mprint(f"SEED: {cfg.seed}")
     utils.set_seed(cfg.seed+dist.get_rank())
+    
+    
+    # load saved state from checkpoint
+    loaded_state = torch.load(cfg.model_path, map_location=device)
+    train_cfg = loaded_state['config']
 
     # Update sampling config from training config
     OmegaConf.set_struct(cfg, False)
@@ -107,7 +109,7 @@ def _run(rank, world_size, cfg):
     if cfg.eval.batch_size == 0:
         OmegaConf.update(cfg, "eval.batch_size", cfg.sampling.batch_per_gpu * cfg.ngpus * cfg.training.accum)
 
-    # build hypersphere
+    # build sde
     token_size = train_cfg.tokens
     vocab_size = train_cfg.tokens + (1 if train_cfg.sde.prior_dist.add_mask_token else 0)
     manifold = Hypersphere(vocab_size-1)
@@ -138,11 +140,8 @@ def _run(rank, world_size, cfg):
             device=device
         )
 
-    # load state from checkpoint
-    loaded_state = torch.load(cfg.model_path, map_location=device)
-
     # build model
-    drift_model = instantiate(train_cfg.model, vocab_size=vocab_size, sde=sde).to(device)
+    drift_model = instantiate(train_cfg.model).to(device)
 
     # checkpoint for torch compiled model
     if "_orig_mod" in [*loaded_state['model']][0]:
