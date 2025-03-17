@@ -177,7 +177,8 @@ def _run(rank, world_size, cfg):
     this_sample_dir = os.path.join(sample_dir, f"iter_{step}")
     utils.makedirs(this_sample_dir)
 
-    num_samples = 4000 if cfg.data.train=='text8' else 128 #512
+    num_samples = 256 if cfg.data.train=='text8' else 8
+    # num_samples = 4000 if cfg.data.train=='text8' else 512
     samples = []
     for i in tqdm(range(math.ceil(num_samples / (sampling_shape[0] * world_size))), leave=False):
         sample = sampling_fn(drift_model).detach().cpu() # Shape: B x (mxL) x V
@@ -211,9 +212,7 @@ def _run(rank, world_size, cfg):
         for i in range(world_size):
             with open(os.path.join(this_sample_dir, f"samples_{i}.pkl"), 'rb') as file:
                 sample = pickle.load(file)
-            # samples.append(sample)
             samples.extend(sample)
-        # samples = torch.cat(samples)
 
         print(f"{len(samples)} samples loaded.")
 

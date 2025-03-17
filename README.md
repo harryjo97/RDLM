@@ -73,13 +73,17 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
     ngpus=1 \
     run_mode=sample \
     server=sample \
-    exp=sample \
+    exp=sample_lm1b \
     "model_path='PATH_TO_MODEL_CHECKPOINT'" \
-    sampling.steps=1000
+    seed=0
 ```
 
 ## Pretrained checkpoints 
-We will provide the checkpoints of the pretrained models on Text8 and LM1B datasets soon.
+The checkpoints for the models trained on Text8 and LM1B datasets are available in this [Google Drive folder](https://drive.google.com/drive/folders/1aDTZtPIxAxQrkaRSahjuWbkxX1OYq9CC?usp=sharing).
+
+- Download `checkpoint.pth` and pass the path to the downloaded file to `PATH_TO_MODEL_CHECKPOINT`. Use the command provided in the above section to generate and evaluate the samples.
+
+- Additional files `sde.pkl` and `config.yaml` are provided for reproducibility and further analysis.
 
 
 ## Citation

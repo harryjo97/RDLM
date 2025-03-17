@@ -10,10 +10,10 @@ paths:
 
 hydra:
   sweep:
-    dir: ./exps/${name}/${path2data:${model_path}}/${path2name:${model_path}}/${hydra.job.override_dirname}
+    dir: ./exps/${name}/${path2name:${model_path}}/${hydra.job.override_dirname}
     subdir: ${seed}
   run:
-    dir: ./exps/${name}/${path2data:${model_path}}/${path2name:${model_path}}/${hydra.job.override_dirname}/${seed}
+    dir: ./exps/${name}/${path2name:${model_path}}/${hydra.job.override_dirname}/${seed}
 
   job:
     config:
