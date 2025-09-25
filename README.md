@@ -1,6 +1,6 @@
 # Riemannian Diffusion Langauge Model
 
-Official Code Repository for the paper [Continuous Diffusion Model for Language Modeling](https://arxiv.org/abs/2502.11564)
+Official code repository for the paper [Continuous Diffusion Model for Language Modeling](https://arxiv.org/abs/2502.11564) (NeurIPS 2025)
 
 We provide an implementation for Riemannian Diffusion Language Model (RDLM) on language modeling tasks.
 
@@ -90,13 +90,12 @@ The checkpoints for the models trained on Text8 and LM1B datasets are available 
 
 If you found the provided code with our paper useful in your work, we kindly request that you cite our work.
 
-```
-@article{jo2025RDLM,
-  author    = {Jaehyeong Jo and=
+```BibTex
+@inproceedings{jo2025RDLM,
+  author    = {Jaehyeong Jo and
                Sung Ju Hwang},
   title     = {Continuous Diffusion Model for Language Modeling},
-  journal   = {arXiv:2502.11564},
+  booktitle = {Advances in Neural Information Processing Systems},
   year      = {2025},
-  url       = {https://arxiv.org/abs/2502.11564}
 }
 ```
